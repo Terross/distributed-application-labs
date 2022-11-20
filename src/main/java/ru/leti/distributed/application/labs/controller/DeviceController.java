@@ -1,6 +1,7 @@
 package ru.leti.distributed.application.labs.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +9,7 @@ import ru.leti.distributed.application.labs.domain.Device;
 import ru.leti.distributed.application.labs.service.DeviceService;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Controller
@@ -17,8 +19,9 @@ public class DeviceController {
     private final DeviceService deviceService;
 
     @PostMapping("/device")
-    public ResponseEntity<Device> createDevice(@RequestBody Device device) {
-        return ResponseEntity.ok(deviceService.createDevice(device));
+    public ResponseEntity<String> createDevice(@RequestBody Device device,
+                                               @RequestHeader(value = "Accept-Language", required = false) Locale locale) {
+        return ResponseEntity.ok(deviceService.createDevice(device, locale));
     }
 
     @GetMapping("/device/{id}")
@@ -32,15 +35,16 @@ public class DeviceController {
     }
 
     @DeleteMapping("/device/{id}")
-    public ResponseEntity<String> deleteDevice(@PathVariable("id")UUID id) {
-        deviceService.deleteDeviceById(id);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<String> deleteDevice(@PathVariable("id")UUID id,
+                                               @RequestHeader(value = "Accept-Language", required = false) Locale locale) {
+        return ResponseEntity.ok(deviceService.deleteDeviceById(id, locale));
     }
 
     @PutMapping("/device/{id}")
-    public ResponseEntity<Device> updateDevice(@PathVariable("id") UUID id,
-                                               @RequestBody Device device) {
-        return ResponseEntity.ok(deviceService.updateDevice(id, device));
+    public ResponseEntity<String> updateDevice(@PathVariable("id") UUID id,
+                                               @RequestBody Device device,
+                                               @RequestHeader(value = "Accept-Language", required = false) Locale locale) {
+        return ResponseEntity.ok(deviceService.updateDevice(id, device, locale));
     }
 
 }

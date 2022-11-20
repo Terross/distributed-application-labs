@@ -1,23 +1,31 @@
 package ru.leti.distributed.application.labs.service;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import ru.leti.distributed.application.labs.domain.Device;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class DeviceService {
 
+    private final MessageSource messageSource;
     private final List<Device> devices = new ArrayList<>();
 
-    public Device createDevice(Device device) {
+    public String createDevice(Device device, Locale locale) {
         devices.add(device);
-        return device;
+        return messageSource.getMessage("devices.create.message", null, locale)
+                .formatted(device.getId().toString(), device.getName());
     }
+    //﻿devices.create.message
+    //devices.create.message
 
     public List<Device> getAllDevices() {
         return devices;
@@ -27,20 +35,23 @@ public class DeviceService {
         return findDeviceById(deviceId);
     }
 
-    public void deleteDeviceById(UUID deviceId) {
+    public String deleteDeviceById(UUID deviceId, Locale locale) {
         var removedDevice = findDeviceById(deviceId);
 
         devices.remove(removedDevice);
+        return messageSource.getMessage("devices.delete.message", null, locale)
+                .formatted(removedDevice.getId().toString(), removedDevice.getName());
     }
 
-    public Device updateDevice(UUID deviceId, Device newDevice) {
+    public String updateDevice(UUID deviceId, Device newDevice, Locale locale) {
         var device = findDeviceById(deviceId);
         device.setType(newDevice.getType());
         device.setName(newDevice.getName());
         device.setStatus(newDevice.isStatus());
         device.setMaker(newDevice.getMaker());
         device.setColor(newDevice.getColor());
-        return device;
+        return messageSource.getMessage("devices.update.message", null, locale)
+                .formatted(device.getId().toString(), device.getName());
     }
 
 
