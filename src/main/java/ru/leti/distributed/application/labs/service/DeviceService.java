@@ -24,8 +24,6 @@ public class DeviceService {
         return messageSource.getMessage("devices.create.message", null, locale)
                 .formatted(device.getId().toString(), device.getName());
     }
-    //﻿devices.create.message
-    //devices.create.message
 
     public List<Device> getAllDevices() {
         return devices;
@@ -47,7 +45,7 @@ public class DeviceService {
         var device = findDeviceById(deviceId);
         device.setType(newDevice.getType());
         device.setName(newDevice.getName());
-        device.setStatus(newDevice.isStatus());
+        device.setStatus(newDevice.getStatus());
         device.setMaker(newDevice.getMaker());
         device.setColor(newDevice.getColor());
         return messageSource.getMessage("devices.update.message", null, locale)
