@@ -37,10 +37,10 @@ public class DeviceController {
                         .getDevice(id, name, locale))
                         .withSelfRel(),
                 linkTo(methodOn(DeviceController.class)
-                        .createDevice(new Device(id, name, null, null, null, null), locale))
+                        .createDevice(new Device(id, name, null, null, null, null, null), locale))
                         .withRel(messageSource.getMessage("devices.create.url", null, locale)),
                 linkTo(methodOn(DeviceController.class)
-                        .updateDevice(id, new Device(id, name, device.getColor(), device.getType(), device.getMaker(), device.getStatus()), locale))
+                        .updateDevice(id, new Device(id, name, device.getColor(), device.getType(), device.getMaker(), device.getStatus(), device.getComment()), locale))
                         .withRel(messageSource.getMessage("devices.update.url", null, locale)),
                 linkTo(methodOn(DeviceController.class)
                         .deleteDevice(id, locale))

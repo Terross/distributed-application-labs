@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: devices
+  profiles:
+    active: dev
+  config:
+    import: optional:configserver:http://localhost:8071
+device:
+  room: "office"
+
